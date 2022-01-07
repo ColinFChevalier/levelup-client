@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { GameContext } from "./GameProvider.js";
+import reactRouterDom from "react-router-dom";
 
 export const GameList = (props) => {
   const { games, getGames } = useContext(GameContext);
@@ -25,6 +26,22 @@ export const GameList = (props) => {
           </section>
         );
       })}
+      <button
+        className="btn btn-2 btn-sep icon-create"
+        onClick={() => {
+          history.push({ pathname: "/games/new" });
+        }}>
+        Register New Game
+      </button>
     </article>
   );
 };
+
+{/* <button
+  className="btn btn-2 btn-sep icon-create"
+  onClick={() => {
+    history.push({ pathname: "/games/new" });
+  }}
+>
+  Register New Game
+</button> */}
