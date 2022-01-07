@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { GameContext } from "./GameProvider.js";
 import reactRouterDom from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export const GameList = (props) => {
   const { games, getGames } = useContext(GameContext);
@@ -8,6 +9,8 @@ export const GameList = (props) => {
   useEffect(() => {
     getGames();
   }, []);
+  
+  const history = useHistory()
 
   return (
     <article className="games">

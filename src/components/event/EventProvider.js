@@ -17,6 +17,7 @@ export const EventProvider = (props) => {
 
   const createEvent = () => {
     return fetch("http://localhost:8000/events", {
+      method: "POST",
       headers: {
         Authorization: `Token ${localStorage.getItem("lu_token")}`,
       },
