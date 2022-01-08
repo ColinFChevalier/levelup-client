@@ -16,7 +16,7 @@ export const GameProvider = (props) => {
   };
 
   const createGame = (newGame) => {
-    return fetch("http://localhost:8000/games/new", {
+    return fetch("http://localhost:8000/games", {
       method: "POST",
       headers: {
         Authorization: `Token ${localStorage.getItem("lu_token")}`,
@@ -25,7 +25,7 @@ export const GameProvider = (props) => {
       body: JSON.stringify(newGame)
     })
     .then((response) => response.json())
-    .then(createGame);
+    .then(getGames);
   };
   
   const getGameTypes = () => {
