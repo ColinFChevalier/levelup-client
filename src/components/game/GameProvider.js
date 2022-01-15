@@ -24,22 +24,22 @@ export const GameProvider = (props) => {
       },
       body: JSON.stringify(newGame)
     })
-    .then((response) => response.json())
-    .then(getGames);
+      .then((response) => response.json())
+      .then(getGames);
   };
-  
+
   const getGameTypes = () => {
     return fetch("http://localhost:8000/gametypes", {
       headers: {
         Authorization: `Token ${localStorage.getItem("lu_token")}`,
       },
     })
-    .then((response) => response.json())
-    .then(getGameTypes);
+      .then((response) => response.json())
+      .then(setTypes);
   };
 
   return (
-    <GameContext.Provider value={{ games, getGames, createGame, getGameTypes }}>
+    <GameContext.Provider value={{ games, getGames, createGame, getGameTypes, setTypes }}>
       {props.children}
     </GameContext.Provider>
   );

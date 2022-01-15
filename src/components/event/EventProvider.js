@@ -15,12 +15,14 @@ export const EventProvider = (props) => {
       .then(setEvents);
   };
 
-  const createEvent = () => {
+  const createEvent = (event) => {
     return fetch("http://localhost:8000/events", {
       method: "POST",
       headers: {
         Authorization: `Token ${localStorage.getItem("lu_token")}`,
+        "Content-Type": "application/json"
       },
+      body: JSON.stringify(event)
     })
       .then((response) => response.json())
       .then(getEvents);

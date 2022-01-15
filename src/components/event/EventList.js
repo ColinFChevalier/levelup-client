@@ -38,8 +38,8 @@ export const EventList = (props) => {
               @ {event.time}
             </div>
             <button className="btn btn-2" onClick={() => joinEvent(event.id)}>
-        Join
-      </button>
+              Join
+            </button>
           </section>
         );
       })}

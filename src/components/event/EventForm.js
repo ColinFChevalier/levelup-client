@@ -1,17 +1,45 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { EventContext } from "./EventProvider.js"
+import { GameContext } from "../game/GameProvider";
 
 export const EventForm = () => {
     const history = useHistory();
-
-    const [currentEvent, setEvent] = useState({});
+    const { createEvent, getEvents } = useContext(EventContext)
+    const { getGames, games } = useContext(GameContext)
+    const [currentEvent, setEvent] = useState({
+        title: 0,
+        description: "",
+        date: "",
+        time: ""
+    });
 
     useEffect(() => {
-        // Get all existing games from API
+        getGames();
     }, []);
 
-    const changeEventState = (domEvent) => {
-        // ...
+    const changeEventGameState = (domEvent) => {
+        const newGameState = { ...currentEvent };
+        newGameState.game= domEvent.target.value;
+        setEvent(newGameState)
+    };
+
+    const changeEventDescriptionState = (domEvent) => {
+        const newEventDescriptionState = { ...currentEvent };
+        newEventDescriptionState.description = domEvent.target.value;
+        setEvent(newEventDescriptionState)
+    };
+
+    const changeEventDateState = (domEvent) => {
+        const newEventDateState = { ...currentEvent };
+        newEventDateState.date = domEvent.target.value;
+        setEvent(newEventDateState)
+    };
+
+    const changeEventTimeState = (domEvent) => {
+        const newEventTimeState = { ...currentEvent };
+        newEventTimeState.time = domEvent.target.value;
+        setEvent(newEventTimeState)
     };
 
     return (
@@ -24,26 +52,73 @@ export const EventForm = () => {
                         name="gameId"
                         className="form-control"
                         value={currentEvent.gameId}
-                        onChange={changeEventState}
+                        onChange={changeEventGameState}
                     >
                         <option value="0">Select a game...</option>
                         {games.map((game) => (
-                            <option></option>
+                            <option
+                                key={game.id}
+                                value={game.id}
+                            >
+                                {game.title}
+                            </option>
                         ))}
                     </select>
                 </div>
-            </fieldset>
 
-            {/* Create the rest of the input fields */}
+                <div className="form-group">
+                    <label htmlFor="gameId">Description: </label>
+                    <input
+                        type="text"
+                        name="text"
+                        required
+                        autoFocus
+                        className="form-control"
+                        value={currentEvent.description}
+                        onChange={changeEventDescriptionState}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="gameId">Date: </label>
+                    <input
+                        type="date"
+                        name="date"
+                        required
+                        autoFocus
+                        className="form-control"
+                        value={currentEvent.date}
+                        onChange={changeEventDateState}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="gameId">Time: </label>
+                    <input
+                        type="time"
+                        name="time"
+                        required
+                        autoFocus
+                        className="form-control"
+                        value={currentEvent.time}
+                        onChange={changeEventTimeState}
+                    />
+                </div>
+            </fieldset>
 
             <button
                 type="submit"
                 onClick={(evt) => {
                     evt.preventDefault();
 
-                    // Create the event
+                    const event = {
+                        game: parseInt(currentEvent.game),
+                        description: currentEvent.description,
+                        date: currentEvent.date,
+                        time: currentEvent.time
 
-                    // Once event is created, redirect user to event list
+                    }
+                    createEvent(event).then(() => history.push("/events"));
                 }}
                 className="btn btn-primary"
             >
